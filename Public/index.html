@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Deep Search – Web Researcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="SerqAI's Open-Source Deep Search is a ChatGPT-style research app that plans queries, searches web & scholarly sources (arXiv, PubMed), streams progress, and delivers fully-cited reports.">
+    <meta name="keywords" content="Open Source Deep Researcher, OS, FOSS, deep search, deep research, research chat, scholarly search, web search, PubMed, arXiv, literature review, citations, SSE, Node.js, OpenAI, GPT-4o, GPT-4o-mini, web_search_preview">
+    <meta name="author" content="Maxim Bespalov https://github.com/Antibody">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+          <div class="brand" role="banner" aria-label="SerqAI — Open Source Deep Researcher">
+            <div class="brand-logo" aria-hidden="true">
+              <span class="brand-emoji">🔍</span> 
+            </div>
+            <div class="brand-text">
+              <div class="brand-title">SerqAI</div>
+              <div class="brand-subtitle">Open Source Deep Researcher</div>
+            </div>
+          </div>
+
+        
+        <section class="api-key-panel emphasize" aria-labelledby="api-key-title">
+          <h2 id="api-key-title">OpenAI API Key</h2>
+          <p class="muted small">Your key is stored locally in this browser.</p>
+
+          <form id="api-key-form" class="api-key-form" autocomplete="off" novalidate>
+            <label class="field">
+              <span class="label">OpenAI API key:</span>
+              <div class="api-key-input-wrap">
+                <input id="api-key-input" name="openai_key" type="password" inputmode="text" autocomplete="off" spellcheck="false" placeholder="sk-…" aria-describedby="api-key-help" />
+                <button type="button" id="api-key-toggle-visibility" class="btn icon ghost" title="Show/Hide key" aria-label="Show or hide API key">👁️</button>
+              </div>
+              <small id="api-key-help" class="muted">Paste your key (starts with <code>sk-</code>). Click Save to enable chat.</small>
+            </label>
+
+            <div class="api-key-actions">
+              <button type="submit" id="api-key-save" class="btn primary">Save</button>
+              <button type="button" id="api-key-clear" class="btn danger ghost">Clear</button>
+              <span id="api-key-status" class="status-pill" aria-live="polite">No key</span>
+            </div>
+          </form>
+
+          
+          <div id="api-key-cost-tip" class="tooltip panel-tip" role="tooltip" aria-hidden="true">
+            <span class="tip-text">Deep search will cost you  0.7-1.3 USD and can take 6-12 min</span>
+            <span class="tooltip-arrow" aria-hidden="true"></span>
+          </div>
+          
+        </section>
+
+        <div class="controls">
+          <label class="field has-tooltip" id="depth-field" aria-describedby="depth-tip">
+            <span class="label">Research Depth</span>
+            <select id="depth-select">
+              <!-- <option value="shallow">Shallow</option> -->
+              <!-- <option value="standard" selected>Standard</option> -->
+              <option value="deep">Deep</option>
+            </select>
+            <div id="depth-tip" class="tooltip" role="tooltip" aria-hidden="true">
+              Depth selection has not been implemented yet
+              <span class="tooltip-arrow" aria-hidden="true"></span>
+            </div>
+          </label>
+
+          <div class="sessions">
+            <div class="sessions-head">
+              <span>Chats</span>
+              <div class="sessions-actions">
+                <button id="new-session" class="btn small">New</button>
+                <button id="clear-all" class="btn small danger" title="Remove all chats">Clear all</button>
+              </div>
+            </div>
+            <ul id="session-list" class="session-list" aria-label="Chat sessions"></ul>
+          </div>
+        </div>
+
+    <center>
+       <a href="https://github.com/Antibody/deep-researcher-node" target="_blank" rel="noopener noreferrer" class="jsx-417f10ac05b666cb github-link"><svg role="img" viewBox="0 0 24 24" width="64" height="64" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="jsx-417f10ac05b666cb"><title class="jsx-417f10ac05b666cb">GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.744.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.334-5.466-5.93 0-1.31.47-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 013.003-.404c1.02.005 2.045.137 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.803 5.625-5.475 5.921.43.37.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.293 0 .32.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" class="jsx-417f10ac05b666cb"></path></svg><div class="jsx-417f10ac05b666cb github-text">Open-Source Deep Reseacher</div></a>
+
+    </center>
+        
+        <footer class="sidebar-footer">
+          <span class="muted">Server endpoints</span>
+          <code class="endpoint">GET /jwt-token</code>
+          <code class="endpoint">GET /deep-research-FOSS-events</code>
+          <code class="endpoint">POST /deep-research</code>
+          <code class="endpoint">POST /fetch-titles</code>
+        </footer>
+      </aside>
+
+      <main class="chat">
+        <header class="chat-header">
+          <div class="chat-title"><span id="active-session-title">New chat</span></div>
+          <div class="status" id="sse-status" title="SSE status" aria-live="polite">SSE: idle</div>
+        </header>
+
+        <section id="GPT-chatly-message" class="hero">
+          <div class="hero-inner">
+            <h2>Welcome to Deep Research</h2>
+            <p>Ask a question and I’ll plan, search internet, fetch, and synthesize a fully-cited report. Live logs show the steps.</p>
+            <p class="muted">Tip: include words like &ldquo;scientific&rdquo; or &ldquo;arXiv&rdquo;, &ldquo;PubMed&rdquo;, &ldquo;research&rdquo; to nudge deep search into a scholar mode.</p>
+          </div>
+        </section>
+
+        <section id="conversation" class="conversation" aria-live="polite" aria-relevant="additions"></section>
+
+        <form id="composer" class="composer" autocomplete="off" data-requires-key="true" aria-disabled="true">
+          <div class="composer-inner">
+            <button type="button" class="btn ghost icon" id="attach-btn" title="Attach (not used)" disabled>📎</button>
+            <textarea id="user-input" rows="1" placeholder="Ask a question, e.g., “How does deep search work”" aria-label="Message" disabled></textarea>
+            <button type="submit" class="btn primary" id="send-btn" aria-label="Send" disabled>Send</button>
+          </div>
+          <div class="composer-hint">
+            Shift+Enter for newline • Powered by <a href="https://serqai.com" target="_blank" rel="noopener noreferrer">SerqAI</a>
+            </div>
+          <div id="composer-lock" class="composer-lock" aria-hidden="true"><span>Enter an API key in the sidebar to start deep researcher.</span></div>
+        </form>
+      </main>
+    </div>
+
+    <div id="toast-root" class="toast-root" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <template id="tmpl-message">
+      <div class="message-container">
+        <div class="avatar"></div>
+        <div class="message"><div class="message-content"></div></div>
+      </div>
+    </template>
+
+    <script src="deep-search-FOSS.js"></script>
+  </body>
+</html>
