@@ -1,6 +1,6 @@
 # [Deep Researcher (FOSS)](https://serqai.com/deep-search.html)
 
-# Demo of deep search web app: https://serqai.com/deep-search.html
+### Demo of deep search web app: https://serqai.com/deep-search.html
 
 A [repo](https://github.com/Antibody/deep-researcher-node) for Node.js web service for writing cited, outline-driven mini-review based on user's prompt. For each request it runs a multi-stage evidence pipeline: planning > search > fetching > open-access resolution > doc cards > claims > themed synthesis > polishing > expansions > final metrics.
 
